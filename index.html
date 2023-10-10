@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        function onPageLoad() {
+            var username = localStorage.getItem('username');
+            var password = localStorage.getItem('password');
+            if (username === null && password === null) {
+            } else {
+                window.location.href = "dashboard.html";
+            }
+        }
+        window.onload = onPageLoad();
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+      
+        .login-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button[type="submit"] {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+    <script>
+         const supabaseUrl  = 'https://rbnketmcgwygdvxxfovh.supabase.co';
+         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJibmtldG1jZ3d5Z2R2eHhmb3ZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY5MjQ4NDEsImV4cCI6MjAxMjUwMDg0MX0.Qr0iZFfVsfNCyoQcU3hBiVkQ6ULCSMRiAwY8CxKrIeU';
+         var supabase = supabase.createClient(supabaseUrl,supabaseAnonKey);
+
+         document.getElementById("login-form").addEventListener("submit", async function(event)  {
+            event.preventDefault(); // Prevent form submission
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            let { data: users, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('username', username)
+            .eq('password', password);
+            if(users.length > 0){
+                window.location.href = "dashboard.html";
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
+            }else{
+                alert("Invalid username or password");
+            }
+        });
+    </script>
+</body>
+</html>

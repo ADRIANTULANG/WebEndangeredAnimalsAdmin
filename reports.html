@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Section</title>
+     <!-- LOG OUT FUNCTION -->
+     <script>
+        function onPageLoad() {
+            var user = localStorage.getItem('username');
+            if(user === null){
+                window.location.href = "index.html";
+            }
+        }
+        window.onPageLoad();
+    </script>
+     <script>
+        function onLogout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3udwHvfjDokDUKekgOROLcrkJbOFi0Vc"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #000000;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #000000;  
+            justify-content: space-between;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            flex: 1;
+        }
+
+        .search-bar button[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .sidebar {
+            background-color: #f2f2f2;
+            width: 200px;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+
+        .animal-list {
+            flex: 1 1 300px;
+            margin-right: 20px;
+        }
+
+        .animal-list ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .animal-list li {
+            margin-bottom: 20px;
+        }
+
+        .animal-list img {
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .animal-info {
+            flex: 1 1 300px;
+        }
+
+        #animal-image {
+            margin-bottom: 20px;
+        }
+
+        #animal-image img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        #animal-details {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #animal-details p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- <img src="logo.png" alt="Logo"  class="header-logo" width="100" height="100"> -->
+        
+        <div class="search-bar">
+            <h1 style="margin-right: 60%; margin-left: 40%;">Reports</h1>
+            <input type="text" placeholder="Search...">
+            <button type="submit">Search</button>
+        </div>
+    </div>
+    <div class="sidebar">
+        <ul>
+            <li><a href="#" onclick="loadPage('dashboard')">Dashboard</a></li>
+            <li><a href="#" onclick="loadPage('reports')">Reports</a></li>
+            <li onclick="onLogout()" ><a>Logout</a></li>
+            <!-- <li><a href="settings.html">Settings</a></li> -->
+        </ul>
+    </div>
+    <div class="content">
+        
+            <div id="map"></div>
+            <script>
+                async function initMap() {
+                    const { Map } = await google.maps.importLibrary("maps");
+    
+                    map = new Map(document.getElementById("map"), {
+                        center: { lat: 8.9465, lng: 125.5370 },
+                        zoom: 14,
+                    });
+                }
+                window.onload = initMap;
+            </script>
+        
+        <div class="animal-list">
+            <h2>Animal Information</h2>
+            <ul>
+                <li>
+                    <img src="animal1.jpg" alt="Elephant" data-lat="12.9716" data-lng="77.5946" data-info="This is an elephant">
+                </li>
+                <li>
+                    <img src="animal2.jpg" alt="Tiger" data-lat="13.0827" data-lng="80.2707" data-info="This is a tiger">
+                </li>
+                <li>
+                    <img src="animal2.jpg" alt="Lion" data-lat="13.0827" data-lng="80.2707" data-info="This is a tiger">
+                </li>
+                <li>
+                    <img src="animal2.jpg" alt="Cat" data-lat="13.0827" data-lng="80.2707" data-info="This is a tiger">
+                </li>
+                <li>
+                    <img src="animal2.jpg" alt="Dog" data-lat="13.0827" data-lng="80.2707" data-info="This is a tiger">
+                </li>
+            </ul>
+        </div>
+        <!-- <div class="animal-info">
+          
+            <div id="animal-image">
+                <img src="" alt="">
+            </div>
+            <div id="animal-details">
+                <p></p>
+            </div>
+        </div> -->
+    </div>
+    <script src="navigator.js"></script>
+</body>
+</html>
